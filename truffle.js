@@ -16,7 +16,7 @@ module.exports = {
    //default -- contracts_build_directory:"./build/contracts",
  // contracts_build_directory:"./client/src/contracts",
   networks: {
-    ganache: {
+    development: {
       host: "localhost",
       port: 8545,
       network_id: "*" // match any network
