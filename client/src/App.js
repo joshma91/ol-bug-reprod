@@ -146,30 +146,9 @@ class App extends Component {
     const { accounts, contract } = this.state;
     console.log("example openlaw starting");
   };
-  /*converts an email address into an object, to be used with uploadDraft
-or upLoadContract methods from the APIClient.
-Eventually this function will no longer be needed. */
-  convertUserObject = original => {
-    const object = {
-      id: {
-        id: original.id
-      },
-      email: original.email,
-      identifiers: [
-        {
-          identityProviderId: "openlaw",
-          identifier: original.identifiers[0].id
-        }
-      ]
-    };
-    return object;
-  };
 
   /*Build Open Law Params to Submit for Upload Contract*/
   buildOpenLawParamsObj = async (myTemplate, creatorId) => {
-    const sellerUser = await apiClient.getUserDetails(this.state.sellerEmail);
-    console.log(sellerUser);
-    const buyerUser = await apiClient.getUserDetails(this.state.buyerEmail);
 
     const object = {
       templateId: myTemplate.id,
@@ -181,12 +160,8 @@ Eventually this function will no longer be needed. */
         "Buyer Address": this.state.buyer,
         "Purchased Item": this.state.descr,
         "Purchase Price": this.state.price,
-        "Seller Signatory Email": JSON.stringify(
-          this.convertUserObject(sellerUser)
-        ),
-        "Buyer Signatory Email": JSON.stringify(
-          this.convertUserObject(buyerUser)
-        )
+        "Seller Signatory Email": this.state.sellerEmail,
+        "Buyer Signatory Email": this.state.buyerEmail
       },
       overriddenParagraphs: {},
       agreements: {},
@@ -229,7 +204,7 @@ Eventually this function will no longer be needed. */
         console.log(contractId);
 
         const contractStatus = await apiClient.loadContractStatus(contractId);
-        console.log(contractStatus)
+        console.log("contract status..", contractStatus)
 
         this.setState({ draftId });
       });
