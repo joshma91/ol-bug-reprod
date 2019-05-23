@@ -228,8 +228,6 @@ Eventually this function will no longer be needed. */
         const contractId = await apiClient.uploadContract(contractParams);
         console.log(contractId);
 
-        await apiClient.sendContract([], [], contractId);
-
         const contractStatus = await apiClient.loadContractStatus(contractId);
         console.log(contractStatus)
 
